@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/tendermint/tendermint/libs/cli"
-	"github.com/tendermint/tendermint/libs/common"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
 	tmtime "github.com/tendermint/tendermint/types/time"
 
 	"github.com/maticnetwork/heimdall/app"
@@ -37,7 +37,7 @@ func initCmd(ctx *server.Context, cdc *codec.Codec) *cobra.Command {
 			// create chain id
 			chainID := viper.GetString(client.FlagChainID)
 			if chainID == "" {
-				chainID = fmt.Sprintf("heimdall-%v", common.RandStr(6))
+				chainID = fmt.Sprintf("heimdall-%v", tmrand.Str(6))
 			}
 
 			validatorID := viper.GetInt64(stakingcli.FlagValidatorID)

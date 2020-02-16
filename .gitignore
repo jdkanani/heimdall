@@ -1,10 +1,5 @@
 .DS_Store
 
-# ignore vendor
-vendor/
-vendor/github.com/maticnetwork/bor
-vendor/github.com/tendermint/iavl
-
 # ignore build
 build
 logs

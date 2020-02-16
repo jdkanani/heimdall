@@ -19,7 +19,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/tendermint/tendermint/libs/common"
+	"github.com/tendermint/tendermint/libs/service"
 	httpClient "github.com/tendermint/tendermint/rpc/client"
 
 	authTypes "github.com/maticnetwork/heimdall/auth/types"
@@ -31,7 +31,7 @@ import (
 // Checkpointer to propose
 type Checkpointer struct {
 	// Base service
-	common.BaseService
+	service.BaseService
 	// storage client
 	storageClient *leveldb.DB
 	// header channel
@@ -81,7 +81,7 @@ func NewCheckpointer(cdc *codec.Codec, queueConnector *QueueConnector, httpClien
 		httpClient:     httpClient,
 	}
 
-	checkpointer.BaseService = *common.NewBaseService(logger, HeimdallCheckpointer, checkpointer)
+	checkpointer.BaseService = *service.NewBaseService(logger, HeimdallCheckpointer, checkpointer)
 	return checkpointer
 }
 

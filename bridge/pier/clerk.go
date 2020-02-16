@@ -18,7 +18,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/tendermint/tendermint/libs/common"
+	"github.com/tendermint/tendermint/libs/service"
 	httpClient "github.com/tendermint/tendermint/rpc/client"
 
 	clerkTypes "github.com/maticnetwork/heimdall/clerk/types"
@@ -33,7 +33,7 @@ var lastEventRecordKey = []byte("clerk-event-record-key")
 // ClerkService service spans
 type ClerkService struct {
 	// Base service
-	common.BaseService
+	service.BaseService
 
 	// storage client
 	storageClient *leveldb.DB
@@ -79,7 +79,7 @@ func NewClerkService(cdc *codec.Codec, queueConnector *QueueConnector, httpClien
 		httpClient:     httpClient,
 	}
 
-	clerkService.BaseService = *common.NewBaseService(logger, ClerkServiceStr, clerkService)
+	clerkService.BaseService = *service.NewBaseService(logger, ClerkServiceStr, clerkService)
 	return clerkService
 }
 

@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -12,7 +13,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/tendermint/tendermint/crypto"
-	"github.com/tendermint/tendermint/libs/common"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
 	tmtime "github.com/tendermint/tendermint/types/time"
 
 	"github.com/maticnetwork/heimdall/app"
@@ -46,7 +47,7 @@ testnet --v 4 --n 8 --output-dir ./output --starting-ip-address 192.168.10.2
 			// create chain id
 			chainID := viper.GetString(client.FlagChainID)
 			if chainID == "" {
-				chainID = fmt.Sprintf("heimdall-%v", common.RandStr(6))
+				chainID = fmt.Sprintf("heimdall-%v", tmrand.Str(6))
 			}
 
 			// num of validators = validators in genesis files
@@ -176,7 +177,7 @@ testnet --v 4 --n 8 --output-dir ./output --starting-ip-address 192.168.10.2
 					return err
 				}
 
-				if err := common.WriteFileAtomic(filepath.Join(outDir, "signer-dump.json"), signerJSON, 0600); err != nil {
+				if err := ioutil.WriteFile(filepath.Join(outDir, "signer-dump.json"), signerJSON, 0600); err != nil {
 					fmt.Println("Error writing signer-dump", err)
 					return err
 				}

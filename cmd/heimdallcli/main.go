@@ -29,8 +29,8 @@ import (
 	"github.com/tendermint/go-amino"
 	"github.com/tendermint/tendermint/crypto/secp256k1"
 	"github.com/tendermint/tendermint/libs/cli"
-	"github.com/tendermint/tendermint/libs/common"
 	"github.com/tendermint/tendermint/libs/log"
+	tmrand "github.com/tendermint/tendermint/libs/rand"
 	"github.com/tendermint/tendermint/privval"
 	tmTypes "github.com/tendermint/tendermint/types"
 
@@ -208,7 +208,7 @@ func exportCmd(ctx *server.Context, cdc *codec.Codec) *cobra.Command {
 			// create chain id
 			chainID := viper.GetString(client.FlagChainID)
 			if chainID == "" {
-				chainID = fmt.Sprintf("heimdall-%v", common.RandStr(6))
+				chainID = fmt.Sprintf("heimdall-%v", tmrand.Str(6))
 			}
 
 			dataDir := path.Join(viper.GetString(cli.HomeFlag), "data")

@@ -15,7 +15,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/spf13/viper"
 	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/tendermint/tendermint/libs/common"
+	"github.com/tendermint/tendermint/libs/service"
 	httpClient "github.com/tendermint/tendermint/rpc/client"
 
 	checkpointTypes "github.com/maticnetwork/heimdall/checkpoint/types"
@@ -31,7 +31,7 @@ type Result struct {
 
 type AckService struct {
 	// Base service
-	common.BaseService
+	service.BaseService
 
 	// storage client
 	storageClient *leveldb.DB
@@ -78,7 +78,7 @@ func NewAckService(cdc *codec.Codec, queueConnector *QueueConnector, httpClient 
 		httpClient:     httpClient,
 	}
 
-	ackservice.BaseService = *common.NewBaseService(logger, NoackService, ackservice)
+	ackservice.BaseService = *service.NewBaseService(logger, NoackService, ackservice)
 	return ackservice
 }
 

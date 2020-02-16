@@ -13,7 +13,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/spf13/viper"
 	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/tendermint/tendermint/libs/common"
+	"github.com/tendermint/tendermint/libs/service"
 	httpClient "github.com/tendermint/tendermint/rpc/client"
 
 	borTypes "github.com/maticnetwork/heimdall/bor/types"
@@ -28,7 +28,7 @@ const (
 // SpanService service spans
 type SpanService struct {
 	// Base service
-	common.BaseService
+	service.BaseService
 
 	// storage client
 	storageClient *leveldb.DB
@@ -74,7 +74,7 @@ func NewSpanService(cdc *codec.Codec, queueConnector *QueueConnector, httpClient
 		httpClient:     httpClient,
 	}
 
-	spanService.BaseService = *common.NewBaseService(logger, SpanServiceStr, spanService)
+	spanService.BaseService = *service.NewBaseService(logger, SpanServiceStr, spanService)
 	return spanService
 }
 

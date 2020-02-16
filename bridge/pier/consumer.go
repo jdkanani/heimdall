@@ -5,7 +5,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/spf13/viper"
 	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/tendermint/tendermint/libs/common"
+	"github.com/tendermint/tendermint/libs/service"
 )
 
 //
@@ -24,7 +24,7 @@ import (
 // ConsumerService consumer service
 type ConsumerService struct {
 	// Base service
-	common.BaseService
+	service.BaseService
 
 	// storage client
 	storageClient *leveldb.DB
@@ -46,7 +46,7 @@ func NewConsumerService(cdc *codec.Codec, queueConnector *QueueConnector) *Consu
 		storageClient:  getBridgeDBInstance(viper.GetString(BridgeDBFlag)),
 		queueConnector: queueConnector,
 	}
-	consumerService.BaseService = *common.NewBaseService(logger, AMQPConsumerService, consumerService)
+	consumerService.BaseService = *service.NewBaseService(logger, AMQPConsumerService, consumerService)
 	return consumerService
 }
 

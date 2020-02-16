@@ -12,7 +12,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/spf13/viper"
-	"github.com/tendermint/tendermint/libs/common"
+	"github.com/tendermint/tendermint/libs/service"
 	httpClient "github.com/tendermint/tendermint/rpc/client"
 
 	cliContext "github.com/cosmos/cosmos-sdk/client/context"
@@ -92,7 +92,7 @@ func GetStartCmd() *cobra.Command {
 
 			// strt all processes
 			for _, service := range services {
-				go func(serv common.Service) {
+				go func(serv service.Service) {
 					defer wg.Done()
 					// TODO handle error while starting service
 					serv.Start()
@@ -112,8 +112,8 @@ func GetStartCmd() *cobra.Command {
 }
 
 // SelectedServices will select services to start based on set flags --all, --only
-func SelectedServices(cdc *codec.Codec, _httpClient *httpClient.HTTP, _queueConnector *pier.QueueConnector) []common.Service {
-	services := []common.Service{
+func SelectedServices(cdc *codec.Codec, _httpClient *httpClient.HTTP, _queueConnector *pier.QueueConnector) []service.Service {
+	services := []service.Service{
 		pier.NewConsumerService(cdc, _queueConnector),
 	}
 

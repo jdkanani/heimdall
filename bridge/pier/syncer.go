@@ -17,7 +17,7 @@ import (
 	"github.com/maticnetwork/bor/core/types"
 	"github.com/spf13/viper"
 	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/tendermint/tendermint/libs/common"
+	"github.com/tendermint/tendermint/libs/service"
 	httpClient "github.com/tendermint/tendermint/rpc/client"
 
 	bankTypes "github.com/maticnetwork/heimdall/bank/types"
@@ -43,7 +43,7 @@ const (
 // Syncer syncs validators and checkpoints
 type Syncer struct {
 	// Base service
-	common.BaseService
+	service.BaseService
 
 	// storage client
 	storageClient *leveldb.DB
@@ -106,7 +106,7 @@ func NewSyncer(cdc *codec.Codec, queueConnector *QueueConnector, httpClient *htt
 		HeaderChannel: make(chan *types.Header),
 	}
 
-	syncer.BaseService = *common.NewBaseService(logger, ChainSyncer, syncer)
+	syncer.BaseService = *service.NewBaseService(logger, ChainSyncer, syncer)
 	return syncer
 }
 
